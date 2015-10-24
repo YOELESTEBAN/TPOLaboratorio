@@ -1,7 +1,4 @@
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,10 +10,18 @@ import javax.swing.JFrame;
  *
  * @author Jonathan
  */
-public class Cajero extends JFrame implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+public class Cajero{
+    private boolean ocupado;
+
+   
+    public boolean estaOcupado(){
+        return ocupado;
     }
-    
+
+    public void ocupar() {
+        ocupado = true;
+    }
+    public void desocupar(){
+        ocupado = false;
+    }
 }

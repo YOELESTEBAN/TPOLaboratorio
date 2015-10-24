@@ -12,12 +12,12 @@ import java.util.ArrayList;
  * @author Yoni
  */
 public class Cuenta {
-    private Cliente cliente;
+    private HiloCliente cliente;
     private String numeroCuenta;
     private double saldo;
     private ArrayList movimientos;
 
-    public Cuenta(Cliente cliente, String numeroCuenta) {
+    public Cuenta(HiloCliente cliente, String numeroCuenta) {
         this.cliente = cliente;
         this.numeroCuenta = numeroCuenta;
         saldo = 0;

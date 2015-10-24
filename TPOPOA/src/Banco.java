@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Banco {
     private ArrayList clientes;
     private ArrayList cuentas;
+    private ArrayList cajeros;
 
     public Banco() {
         clientes = new ArrayList();
