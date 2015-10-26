@@ -30,17 +30,24 @@ public class Banco {
         }
     }
 
+    /**
+     Depositar recibe un numero de cuenta, y un monto aleatorio generado en el 
+     BancoMonitor, no deberia dar errores de ningùn tipos*/
     public void depositar(String numeroCuenta, double montoNuevo) {
         Cuenta aux = buscarCuenta(numeroCuenta);
         aux.ingresarMonto(montoNuevo);
     }
 
+    /**Extraer recibe como parametro un numero de cuenta
+     y un monto aleatorio generado en el BancoMonitor.
+     Podria lanzar un error cuando el saldo es insuficiente para realizar
+     la operacion. Tratarlo maa adelantes*/
     public void extraer(String numeroCuenta, double montoNuevo) {
         Cuenta aux = buscarCuenta(numeroCuenta);
         if(montoNuevo <= aux.getSaldo())
             aux.ingresarMonto(montoNuevo);
         else
-            System.out.println("saldo insuficiente para realizar la extracción");
+            System.out.println("Error - Saldo insuficiente para realizar la extracción");
     }
     
     private Cuenta buscarCuenta(String numero) {
@@ -60,5 +67,24 @@ public class Banco {
         }
         return aux;
 
+    }
+    /**Dado un numero de cuenta, devuelve el saldo de esa cuenta.*/
+    public void verSaldoUnaCuenta(String numero){
+        Cuenta aux = buscarCuenta (numero);
+        if(aux!= null) //supongamos que la cuenta exista.
+            aux.getSaldo();
+        else
+            System.out.println("Numero de cuenta inexistente");
+        //esto no deberia ocurrir porque el cliente se loggeo y la cuenta por lo tanto, existe
+        
+    }
+    public void guardarNuevoMovimiento(String numero, Movimiento mov){
+        Cuenta aux = buscarCuenta (numero);
+        aux.agregarMovimiento(mov);
+        
+    }
+    public ArrayList verMovimientos(String numero){
+        Cuenta aux = buscarCuenta (numero);
+        return(aux.getMovimientos());
     }
 }

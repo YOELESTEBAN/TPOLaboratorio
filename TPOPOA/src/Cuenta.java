@@ -45,4 +45,12 @@ public class Cuenta {
         this.setSaldo(this.getSaldo() - monto);
 
     }
+    public void agregarMovimiento(Movimiento nuevo){
+        this.movimientos.add(nuevo);
+    }
+    /**devuelve todos los movimientos de la cuenta*/
+    public ArrayList getMovimientos() {
+        return movimientos;
+    }
+    
 }
