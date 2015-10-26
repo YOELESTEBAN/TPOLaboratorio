@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  */
 public class BancoMonitor {
 
+    private Banco elBanco;
     private Cajero cajero1;
     private Cajero cajero2;
     private ArrayList clientes;
@@ -31,14 +32,13 @@ public class BancoMonitor {
     }
 
     public synchronized void solicitarCajero(HiloCliente c) {
-        while(c.estaEnCola()){  //El cliente se despierta y se pregunta si esta en cola
+        while (c.estaEnCola()) {  //El cliente se despierta y se pregunta si esta en cola
             this.esperar();     //Si esta en cola se duerme
         }                       //Sino procede a solicitar un cajero
-        if(!cajero1.estaOcupado()){
+        if (!cajero1.estaOcupado()) {
             cajero1.ocupar();
-            c.asignarCajero(cajero1);           
-        }
-        else{
+            c.asignarCajero(cajero1);
+        } else {
             cajero2.ocupar();
             c.asignarCajero(cajero2);
         }
@@ -54,16 +54,44 @@ public class BancoMonitor {
         }
     }
 
-    public void operar() {
+    public void operar(int n, HiloCliente c) {
         /*
-        Se loguea previamente utilizando ASPECTOS
-        1 - depositar
-        2 - extraer
-        3 - consultar saldo
-        4 - consultar movimientos
-        */
+         Se loguea previamente utilizando ASPECTOS
+         1 - depositar
+         2 - extraer
+         3 - consultar saldo
+         4 - consultar movimientos
+         */
+        switch (n) {
+            case 1:
+                generarDeposito(c);
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                System.out.print("no deberia suceder ");
+
+        }
     }
-    public void esperar(){
+
+    private void generarDeposito(HiloCliente c) {
+    double montoNuevo = Math.floor(Math.random() * (1000) + 1); 
+    elBanco.depositar(c.getNumeroCuenta(), montoNuevo);
+        /*debe devolver un monto generado de forma aleatoria*/
+    
+    }
+
+    private double extraer() {
+        /*debe devolver un monto generado de forma aleatoria*/
+        return 1;
+    }
+
+    public void esperar() {
         try {
             this.wait();
         } catch (InterruptedException ex) {

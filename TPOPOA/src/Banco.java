@@ -6,12 +6,12 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Yoni
  */
 public class Banco {
+
     private ArrayList clientes;
     private ArrayList cuentas;
     private ArrayList cajeros;
@@ -20,10 +20,45 @@ public class Banco {
         clientes = new ArrayList();
         cuentas = new ArrayList();
     }
-    
-    public static void main(String[]args){
-        Movimiento mov = new Movimiento("1",100);
+
+    public static void main(String[] args) {
+        Movimiento mov = new Movimiento("1", 100);
         System.out.println(mov.getFecha().toString());
-        
+        for (int i = 0; i < 50; i++) {
+            int n = (int) Math.floor(Math.random() * (4) + 1);  //yoni responsable
+            System.out.println(n);
+        }
+    }
+
+    public void depositar(String numeroCuenta, double montoNuevo) {
+        Cuenta aux = buscarCuenta(numeroCuenta);
+        aux.ingresarMonto(montoNuevo);
+    }
+
+    public void extraer(String numeroCuenta, double montoNuevo) {
+        Cuenta aux = buscarCuenta(numeroCuenta);
+        if(montoNuevo <= aux.getSaldo())
+            aux.ingresarMonto(montoNuevo);
+        else
+            System.out.println("saldo insuficiente para realizar la extracción");
+    }
+    
+    private Cuenta buscarCuenta(String numero) {
+        int index = 0;
+        Cuenta aux = null;
+        boolean band = false;
+        while ((index < cuentas.size()) && (!band)) {
+
+            aux = (Cuenta) cuentas.get(index);
+            band = aux.getNumeroCuenta().equals(numero);
+            index++;
+        }
+        if (!band) //salio en false, o sea no encontro la cuenta...
+        {
+            System.out.println("no deberia pasar");
+            aux = null;
+        }
+        return aux;
+
     }
 }

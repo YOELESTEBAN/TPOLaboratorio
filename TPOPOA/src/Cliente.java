@@ -21,4 +21,42 @@ public class Cliente {
         this.DNI = DNI;
         this.domicilio = domicilio;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    
+
+    public String getDNI() {
+        return DNI;
+    }
+
+    
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public String getNumeroCuenta() {
+        return (cuenta.getNumeroCuenta());
+        
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+    
 }

@@ -1,4 +1,5 @@
 
+import java.util.Random;
 import java.util.logging.Logger;
 
 /*
@@ -23,6 +24,11 @@ public class HiloCliente implements Runnable {
         this.enCola = false;
     }
 
+    public Cliente verCliente() {
+        return cliente;
+    }
+
+    
     public void encolar() {
         this.enCola = true;
     }
@@ -34,12 +40,16 @@ public class HiloCliente implements Runnable {
     public boolean estaEnCola() {
         return this.enCola;
     }
-    
-    public void asignarCajero(Cajero c){
+
+    public void asignarCajero(Cajero c) {
         this.cajero = c;
     }
-    public Cajero getCajero(){
+
+    public Cajero getCajero() {
         return this.cajero;
+    }
+    public String getNumeroCuenta (){
+        return cliente.getNumeroCuenta();
     }
 
     @Override
@@ -50,12 +60,14 @@ public class HiloCliente implements Runnable {
          Obtiene el cajero
          Se loguea
          realiza la operacion deseada
-         Libera el cajero
+         Libera el cajeros
          Muere 
          */
+
+        int n = (int) Math.floor(Math.random() * (4) + 1);
         monitor.hacerCola(this);
         monitor.solicitarCajero(this);
-        monitor.operar();
+        monitor.operar(n, this);
         monitor.liberarCajero(this);
     }
 
