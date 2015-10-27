@@ -14,23 +14,23 @@ import java.util.logging.Logger;
  * @author Jonathan
  */
 public class BancoMonitor {
-    
+
     private Banco elBanco;
     private Cajero cajero1;
     private Cajero cajero2;
     private ArrayList clientes;
     private Queue cola;
-    
+
     public synchronized void hacerCola(HiloCliente c) {
         if (!cola.isEmpty()) {
             cola.add(c);
             c.encolar();
             this.esperar();
-            
+
         }
-        
+
     }
-    
+
     public synchronized void solicitarCajero(HiloCliente c) {
         while (c.estaEnCola()) {  //El cliente se despierta y se pregunta si esta en cola
             this.esperar();     //Si esta en cola se duerme
@@ -43,7 +43,7 @@ public class BancoMonitor {
             c.asignarCajero(cajero2);
         }
     }
-    
+
     public synchronized void liberarCajero(HiloCliente c) {
         if (!cola.isEmpty()) {
             HiloCliente proximoCliente;
@@ -53,7 +53,7 @@ public class BancoMonitor {
             this.notifyAll();
         }
     }
-    
+
     public void operar(int n, HiloCliente c) {
         /*
          Se loguea previamente utilizando ASPECTOS
@@ -67,7 +67,7 @@ public class BancoMonitor {
                 generarDeposito(c);
                 break;
             case 2:
-                extraer(c);
+                generarExtraccion(c);
                 break;
             case 3:
                 verSaldo(c);
@@ -78,27 +78,31 @@ public class BancoMonitor {
             default:
                 System.out.print("no deberia suceder ");
                 break;
-            
+
         }
     }
-    
+
     private void generarDeposito(HiloCliente c) {
-        double montoNuevo = Math.floor(Math.random() * (1000) + 1);        
+        double montoNuevo = Math.floor(Math.random() * (1000) + 1);
         Movimiento mov = new Movimiento("DEPOSITO", montoNuevo);
         elBanco.depositar(c.getNumeroCuenta(), montoNuevo);
         elBanco.guardarNuevoMovimiento(c.getNumeroCuenta(), mov);
         /*debe devolver un monto generado de forma aleatoria*/
-        
+
     }
-    
-    private void extraer(HiloCliente c) {
-        /*debe devolver un monto generado de forma aleatoria*/
-        double montoNuevo = Math.floor(Math.random() * (1000) + 1);  
-         Movimiento mov = new Movimiento("EXTRACCI", montoNuevo);
+    /**Sabiendo el saldo de su cuenta, el cliente genera un monto aleatorio,
+     * que puede ser menor, igual o mayor que el saldo de su cuenta, con 
+     * fines de realizar una buena simulacion.
+     */
+    private void generarExtraccion(HiloCliente c) {
+        double saldoCuenta = c.verCliente().getSaldoCuenta();
+        double montoNuevo = Math.floor(Math.random() * (3) - 1); //Genera un valor entero entre -1 y 1
+        montoNuevo = montoNuevo+saldoCuenta;
+        Movimiento mov = new Movimiento("EXTRACCION", montoNuevo);
         elBanco.extraer(c.getNumeroCuenta(), montoNuevo);
         elBanco.guardarNuevoMovimiento(c.getNumeroCuenta(), mov);
     }
-    
+
     private void verSaldo(HiloCliente c) {
         elBanco.verSaldoUnaCuenta(c.getNumeroCuenta());
     }
@@ -107,9 +111,9 @@ public class BancoMonitor {
      * devuelve una lista con los ultimos movimientos de una cuenta ingresada
      */
     private ArrayList consultarMovimientos(HiloCliente c) {
-        return(elBanco.verMovimientos(c.getNumeroCuenta()));
+        return (elBanco.verMovimientos(c.getNumeroCuenta()));
     }
-    
+
     public void esperar() {
         try {
             this.wait();

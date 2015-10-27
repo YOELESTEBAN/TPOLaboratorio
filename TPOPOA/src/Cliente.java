@@ -46,6 +46,12 @@ public class Cliente {
         return (cuenta.getNumeroCuenta());
         
     }
+    /**Este metodo es solo para poder hacer una buena simulacion.
+      NO DEBERIA DE EXISTIR
+    */
+    public double getSaldoCuenta(){
+        return(cuenta.getSaldo());
+    }
 
     public void setCuenta(Cuenta cuenta) {
         this.cuenta = cuenta;
