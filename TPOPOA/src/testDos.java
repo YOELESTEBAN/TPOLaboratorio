@@ -17,8 +17,8 @@ public class testDos {
     /**
     *yoni:- mejorar constructores Banco, cliente y Cuenta*/
     public static void main(String[] args) {
-        System.out.println("de prueba para GIT");
-        System.out.println("asdfg56g165");
+        System.out.println("PRueba para push");
+        System.out.println("YONI ");
 //        System.out.println("");
         Cliente a = new Cliente("Yoni", "1", "aca cerca");
         Cliente b = new Cliente("sadg", "2", "aca cerca");
