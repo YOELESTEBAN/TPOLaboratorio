@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  *
  * @author Yoni
  */
-public class HiloCliente implements Runnable {
+public class HiloCliente extends Thread {
 
     private Cliente cliente;
     private BancoMonitor monitor;
@@ -66,9 +66,12 @@ public class HiloCliente implements Runnable {
 
         int n = (int) Math.floor(Math.random() * (4) + 1);
         monitor.hacerCola(this);
+//        System.out.println("El cliente esta en la cola, esperando un cajero");
         monitor.solicitarCajero(this);
+//        System.out.println("El cliente esta por operar.bisturi... pinzas.. piiii");
         monitor.operar(n, this);
         monitor.liberarCajero(this);
+        System.out.println("El cliente se va");
     }
 
 }

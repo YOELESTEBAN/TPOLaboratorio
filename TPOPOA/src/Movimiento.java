@@ -46,4 +46,11 @@ public class Movimiento {
     public void setMonto(double monto) {
         this.monto = monto;
     }
+    
+    /*tipo es extraccion, deposito etc etc...*/
+     public String aCadena(){
+         
+         return (""+this.tipo+" - "+this.fecha.getTime().toString()+ " - "+this.monto+" ");
+       
+    }
 }

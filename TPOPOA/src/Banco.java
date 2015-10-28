@@ -21,6 +21,11 @@ public class Banco {
         cuentas = new ArrayList();
     }
 
+    public Banco(ArrayList cli, ArrayList ctas) {
+        this.clientes = cli;
+        this.cuentas = ctas;
+    }
+
     public static void main(String[] args) {
         Movimiento mov = new Movimiento("1", 100);
         System.out.println(mov.getFecha().toString());
@@ -75,7 +80,7 @@ public class Banco {
     /**
      * Dado un numero de cuenta, devuelve el saldo de esa cuenta.
      */
-    public void verSaldoUnaCuenta(String numero) {
+    public double verSaldoUnaCuenta(String numero) {
         double saldo;
         Cuenta aux = buscarCuenta(numero);
         if (aux != null) //supongamos que la cuenta exista.
@@ -85,9 +90,10 @@ public class Banco {
         //COMUNICAR A SUS OBSERVADORES
         else {
             System.out.println("Numero de cuenta inexistente");
+            saldo = -99999;
         }
         //esto no deberia ocurrir porque el cliente se loggeo y la cuenta por lo tanto, existe
-
+        return saldo;
     }
 
     public void guardarNuevoMovimiento(String numero, Movimiento mov) {
@@ -99,5 +105,14 @@ public class Banco {
     public ArrayList verMovimientos(String numero) {
         Cuenta aux = buscarCuenta(numero);
         return (aux.getMovimientos());
+    }
+
+    public String aCadena() {
+        String salida = "";
+        for (Object cliente : clientes) {
+            Cliente aux = (Cliente) cliente;
+            salida = salida + " " + aux.getNombre() + "- numero cuenta" + aux.getNumeroCuenta() + "\n";
+        }
+        return salida;
     }
 }

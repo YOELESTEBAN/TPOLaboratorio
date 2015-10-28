@@ -13,6 +13,12 @@
 public class Cajero{
     private boolean ocupado;
 
+        /**
+         * Los cajeros se construyen vacios. Pocho
+         */
+    public Cajero(){
+        ocupado=false;
+    }
    
     public boolean estaOcupado(){
         return ocupado;
