@@ -5,8 +5,6 @@
  */
 package Cosas;
 
-import puenteMonitor.*;
-
 /**
  *
  * @author kozur
