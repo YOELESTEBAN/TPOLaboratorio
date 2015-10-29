@@ -1,9 +1,7 @@
 package Aspect;
 
 
-import todo.HiloCliente;
 import todo.Banco;
-import todo.BancoMonitor;
 import todo.Cliente;
 import todo.Cuenta;
 import java.util.ArrayList;

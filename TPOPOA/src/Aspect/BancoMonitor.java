@@ -1,10 +1,13 @@
-package todo;
+package Aspect;
 
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import todo.Banco;
+import todo.Cajero;
+import todo.Movimiento;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
