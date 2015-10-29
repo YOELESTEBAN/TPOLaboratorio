@@ -1,3 +1,5 @@
+package todo;
+
 
 import java.util.ArrayList;
 
@@ -26,14 +28,6 @@ public class Banco {
         this.cuentas = ctas;
     }
 
-    public static void main(String[] args) {
-        Movimiento mov = new Movimiento("1", 100);
-        System.out.println(mov.getFecha().toString());
-        for (int i = 0; i < 50; i++) {
-            int n = (int) Math.floor(Math.random() * (3) - 1);  //yoni responsable
-            System.out.println(n);
-        }
-    }
 
     /**
      * Depositar recibe un numero de cuenta, y un monto aleatorio generado en el

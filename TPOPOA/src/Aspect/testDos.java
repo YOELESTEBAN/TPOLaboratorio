@@ -1,4 +1,11 @@
+package Aspect;
 
+
+import todo.HiloCliente;
+import todo.Banco;
+import todo.BancoMonitor;
+import todo.Cliente;
+import todo.Cuenta;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +23,11 @@ public class testDos {
     
     /**
     *yoni:- mejorar constructores Banco, cliente y Cuenta*/
+    public static void algo(){
+        System.out.println("lalalalalallalalala");
+    }
     public static void main(String[] args) {
-
+        algo();
         Cliente a = new Cliente("Yoni", "1", "aca cerca");
         Cliente b = new Cliente("sadg", "2", "aca cerca");
         Cliente c = new Cliente("asfdi", "3", "aca cerca");
