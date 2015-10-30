@@ -1,6 +1,7 @@
 package Aspect;
 
 
+import Interfaz.PantallaPrincipal;
 import todo.Banco;
 import todo.Cliente;
 import todo.Cuenta;
@@ -21,11 +22,12 @@ public class testDos {
     
     /**
     *yoni:- mejorar constructores Banco, cliente y Cuenta*/
-    public static void algo(){
-        System.out.println("lalalalalallalalala");
-    }
     public static void main(String[] args) {
-        algo();
+        
+        /*NO TOCAR GUACHOOOO!
+        PantallaPrincipal pant = new PantallaPrincipal();
+        pant.setVisible(true);*/
+        
         Cliente a = new Cliente("Yoni", "1", "aca cerca");
         Cliente b = new Cliente("sadg", "2", "aca cerca");
         Cliente c = new Cliente("asfdi", "3", "aca cerca");
