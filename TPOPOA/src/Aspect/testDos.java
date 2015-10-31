@@ -2,6 +2,7 @@ package Aspect;
 
 
 import Interfaz.PantallaPrincipal;
+import java.awt.EventQueue;
 import todo.Banco;
 import todo.Cliente;
 import todo.Cuenta;
@@ -24,9 +25,9 @@ public class testDos {
     *yoni:- mejorar constructores Banco, cliente y Cuenta*/
     public static void main(String[] args) {
         
-        /*NO TOCAR GUACHOOOO!
-        PantallaPrincipal pant = new PantallaPrincipal();
-        pant.setVisible(true);*/
+        /*NO TOCAR GUACHOOOO!*/
+
+        new PantallaPrincipal().setVisible(true);
         
         Cliente a = new Cliente("Yoni", "1", "aca cerca");
         Cliente b = new Cliente("sadg", "2", "aca cerca");
