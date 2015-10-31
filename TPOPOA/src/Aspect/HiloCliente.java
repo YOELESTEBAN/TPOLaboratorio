@@ -56,6 +56,9 @@ public class HiloCliente extends Thread {
     public String getNumeroCuenta (){
         return cliente.getNumeroCuenta();
     }
+    public void depositar(){
+        
+    }
 
     @Override
     public void run() {

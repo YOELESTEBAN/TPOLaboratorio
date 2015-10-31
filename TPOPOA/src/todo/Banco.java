@@ -16,7 +16,7 @@ public class Banco {
 
     private ArrayList clientes;
     private ArrayList cuentas;
-    private ArrayList cajeros;
+    private Cajero cajero1,cajero2;
 
     public Banco() {
         clientes = new ArrayList();
@@ -26,6 +26,16 @@ public class Banco {
     public Banco(ArrayList cli, ArrayList ctas) {
         this.clientes = cli;
         this.cuentas = ctas;
+        cajero1 = new Cajero();
+        cajero2 = new Cajero();
+    }
+
+    public Cajero getCajero1() {
+        return cajero1;
+    }
+
+    public Cajero getCajero2() {
+        return cajero2;
     }
 
 

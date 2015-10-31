@@ -5,24 +5,37 @@
  */
 package Interfaz;
 
+import Aspect.BancoMonitor;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
  * @author Jonathan
  */
-public class PantallaPrincipal extends JFrame {
+public class PantallaPrincipal extends JFrame implements Observer {
 
+    private BancoMonitor banco;
+    
     private BotonCerrar cerrar;
     private BotonArrastrar arrastrar;
+    private BotonComenzar comenzar;
+    private BotonDetener detener;
+    private JTextArea log;
+    private JScrollPane barraLog;
 
-    public PantallaPrincipal() {
+    public PantallaPrincipal(BancoMonitor b) {
         super();
+        banco = b;
+        banco.addObserver(this);
         inicializarVentana();
         inicializarComponentes();
     }
@@ -45,6 +58,9 @@ public class PantallaPrincipal extends JFrame {
     private void inicializarComponentes() {
         inicializarCerrar();
         inicializarArrastrar();
+        inicializarComenzar();
+        inicializarDetener();
+        inicializarLog();
 
     }
 
@@ -78,5 +94,45 @@ public class PantallaPrincipal extends JFrame {
         });
 
         this.add(arrastrar);
+    }
+
+    private void inicializarComenzar() {
+        comenzar = new BotonComenzar(this);
+        comenzar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/iconoComenzar.jpg")));
+        comenzar.setBounds(30, 40, 100, 30);
+        comenzar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comenzar.actionPerformed(evt);
+            }
+        });
+
+        this.add(comenzar);
+    }
+
+    private void inicializarDetener() {
+        detener = new BotonDetener(this);
+        detener.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/iconoDetener.jpg")));
+        detener.setBounds(160, 40, 100, 30);
+        detener.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detener.actionPerformed(evt);
+            }
+        });
+
+        this.add(detener);
+    }
+    
+    private void inicializarLog(){
+        log = new JTextArea();
+        log.setEditable(false);
+        barraLog = new JScrollPane(log);
+        barraLog.setBounds(160, 80, 430, 150);
+        this.add(barraLog);
+        
+    }
+
+    @Override
+    public void update(Observable o, Object o1) {
+        log.setText(log.getText()+"\n"+(String)o1);
     }
 }

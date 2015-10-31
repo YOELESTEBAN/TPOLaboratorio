@@ -1,8 +1,8 @@
 package Aspect;
 
-
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import todo.Banco;
@@ -18,33 +18,37 @@ import todo.Movimiento;
  *
  * @author Jonathan
  */
-public class BancoMonitor extends Thread {
+public class BancoMonitor extends Observable implements Runnable {
 
-    private Banco elBanco;
     private Cajero cajero1;
     private Cajero cajero2;
     private ArrayList clientes;
     private LinkedList cola;
 
-    public BancoMonitor(Banco nuevoBanco, ArrayList nuevosCli) {
-        elBanco = nuevoBanco;
+    public BancoMonitor(ArrayList nuevosCli, Cajero c1, Cajero c2) {
         clientes = nuevosCli;
-        this.cajero1 = new Cajero();
-        this.cajero2 = new Cajero();
-        this.cola = new LinkedList();
+        cajero1 = c1;
+        cajero2 = c2;
+        cola = new LinkedList();
 
     }
 
     /*hacer cola estaba sincronizado*/
     public void hacerCola(HiloCliente c) {
         if (!cola.isEmpty()) {
-            System.out.println("El cliente" + c.getNumeroCuenta() + " esta esperando en la cola por una caja");
+
+            this.setChanged();
+            this.notifyObservers("El cliente" + c.getNumeroCuenta() + " esta esperando en la cola por una caja");
+
             cola.add(c);
             c.encolar();
             this.esperar();
         } else {
             if (cajero1.estaOcupado() && cajero2.estaOcupado()) {
-                System.out.println(" los dos cajeros estan ocupados, el cliente "+c.getNumeroCuenta()+" debe entrar en la cola");
+
+                this.setChanged();
+                this.notifyObservers(" los dos cajeros estan ocupados, el cliente " + c.getNumeroCuenta() + " debe entrar en la cola");
+
                 cola.add(c);
                 c.encolar();
                 this.esperar();
@@ -53,19 +57,32 @@ public class BancoMonitor extends Thread {
     }
 
     public synchronized void solicitarCajero(HiloCliente c) {
-        System.out.println("Cliente " + c.getNumeroCuenta() + " esta solicitando cajero");
-        System.out.println("tamaño de la cola " + cola.size());
+
+        /*this.setChanged();
+        this.notifyObservers("Cliente " + c.getNumeroCuenta() + " esta solicitando cajero");
+
+        this.setChanged();
+        this.notifyObservers("tamaño de la cola " + cola.size());*/
+
         while (c.estaEnCola()) {  //El cliente se despierta y se pregunta si esta en cola
             this.esperar();     //Si esta en cola se duerme
         }
-        System.out.println("El cliente " + c.getNumeroCuenta() + " salio de la cola, va al cajero");//Sino procede a solicitar un cajero
+
+        this.setChanged();
+        this.notifyObservers("El cliente " + c.getNumeroCuenta() + " salio de la cola, va al cajero");
+
         if (!cajero1.estaOcupado()) {
-            System.out.println("El cliente " + c.getNumeroCuenta() + " cliente ocupo cajero 1");
+
+            this.setChanged();
+            this.notifyObservers("El cliente " + c.getNumeroCuenta() + " ocupo cajero 1");
 
             cajero1.ocupar();
             c.asignarCajero(cajero1);
         } else {
-            System.out.println("El cliente " + c.getNumeroCuenta() + " cliente ocupo cajero 2");
+
+            this.setChanged();
+            this.notifyObservers("El cliente " + c.getNumeroCuenta() + " ocupo cajero 2");
+
             cajero2.ocupar();
             c.asignarCajero(cajero2);
         }
@@ -78,7 +95,10 @@ public class BancoMonitor extends Thread {
             proximoCliente = (HiloCliente) cola.remove();
             proximoCliente.desencolar();
         }
-        System.out.println("El cliente " + c.getNumeroCuenta() + " El cliente libero el cajero ");
+
+        this.setChanged();
+        this.notifyObservers("El cliente " + c.getNumeroCuenta() + " libero el cajero ");
+        
         this.notifyAll();
     }
 
@@ -122,8 +142,8 @@ public class BancoMonitor extends Thread {
     private void generarDeposito(HiloCliente c) {
         double montoNuevo = Math.floor(Math.random() * (1000) + 1);
         Movimiento mov = new Movimiento("DEPOSITO", montoNuevo);
-        elBanco.depositar(c.getNumeroCuenta(), montoNuevo);
-        elBanco.guardarNuevoMovimiento(c.getNumeroCuenta(), mov);
+        c.getCajero().depositar(c.getNumeroCuenta(), montoNuevo);
+        c.getCajero().guardarNuevoMovimiento(c.getNumeroCuenta(), mov);
         /*debe devolver un monto generado de forma aleatoria*/
 
     }
@@ -138,19 +158,19 @@ public class BancoMonitor extends Thread {
         double montoNuevo = Math.floor(Math.random() * (3) - 1); //Genera un valor entero entre -1 y 1
         montoNuevo = montoNuevo + saldoCuenta;
         Movimiento mov = new Movimiento("EXTRACCION", montoNuevo);
-        elBanco.extraer(c.getNumeroCuenta(), montoNuevo);
-        elBanco.guardarNuevoMovimiento(c.getNumeroCuenta(), mov);
+        c.getCajero().extraer(c.getNumeroCuenta(), montoNuevo);
+        c.getCajero().guardarNuevoMovimiento(c.getNumeroCuenta(), mov);
     }
 
     private double verSaldo(HiloCliente c) {
-        return (elBanco.verSaldoUnaCuenta(c.getNumeroCuenta()));
+        return (c.getCajero().verSaldoUnaCuenta(c.getNumeroCuenta()));
     }
 
     /**
      * devuelve una lista con los ultimos movimientos de una cuenta ingresada
      */
     private ArrayList consultarMovimientos(HiloCliente c) {
-        return (elBanco.verMovimientos(c.getNumeroCuenta()));
+        return (c.getCajero().verMovimientos(c.getNumeroCuenta()));
     }
 
     public synchronized void esperar() {
