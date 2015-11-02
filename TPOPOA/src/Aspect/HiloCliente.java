@@ -1,8 +1,8 @@
 package Aspect;
 
-
 import Aspect.BancoMonitor;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import todo.Cajero;
 import todo.Cliente;
@@ -33,7 +33,6 @@ public class HiloCliente extends Thread {
         return cliente;
     }
 
-    
     public void encolar() {
         this.enCola = true;
     }
@@ -53,11 +52,13 @@ public class HiloCliente extends Thread {
     public Cajero getCajero() {
         return this.cajero;
     }
-    public String getNumeroCuenta (){
+
+    public String getNumeroCuenta() {
         return cliente.getNumeroCuenta();
     }
-    public void depositar(){
-        
+
+    public void depositar() {
+
     }
 
     @Override
@@ -71,15 +72,21 @@ public class HiloCliente extends Thread {
          Libera el cajeros
          Muere 
          */
-
-        int n = (int) Math.floor(Math.random() * (4) + 1);
-        monitor.hacerCola(this);
+        while (true) {
+            int n = (int) Math.floor(Math.random() * (4) + 1);
+            monitor.hacerCola(this);
 //        System.out.println("El cliente esta en la cola, esperando un cajero");
-        monitor.solicitarCajero(this);
+            monitor.solicitarCajero(this);
 //        System.out.println("El cliente esta por operar.bisturi... pinzas.. piiii");
-        monitor.operar(n, this);
-        monitor.liberarCajero(this);
-        System.out.println("El cliente se va");
+            monitor.operar(n, this);
+            monitor.liberarCajero(this);
+            System.out.println("El cliente se va");
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }

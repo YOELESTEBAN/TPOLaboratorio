@@ -16,26 +16,35 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import todo.Cajero;
 
 /**
  *
  * @author Jonathan
  */
-public class PantallaPrincipal extends JFrame implements Observer {
+public class PantallaPrincipal extends JFrame{
 
     private BancoMonitor banco;
+    private Cajero cajero1;
+    private Cajero cajero2;
     
     private BotonCerrar cerrar;
     private BotonArrastrar arrastrar;
     private BotonComenzar comenzar;
     private BotonDetener detener;
     private JTextArea log;
+    private JTextArea logCajero1;
+    private JTextArea logCajero2;
     private JScrollPane barraLog;
+    private JScrollPane barraLogCajero1;
+    private JScrollPane barraLogCajero2;
 
-    public PantallaPrincipal(BancoMonitor b) {
+    public PantallaPrincipal(BancoMonitor b,Cajero c1, Cajero c2) {
         super();
         banco = b;
-        banco.addObserver(this);
+        cajero1 = c1;
+        cajero2 = c2;
+        
         inicializarVentana();
         inicializarComponentes();
     }
@@ -61,6 +70,8 @@ public class PantallaPrincipal extends JFrame implements Observer {
         inicializarComenzar();
         inicializarDetener();
         inicializarLog();
+        inicializarLogCajero1();
+        inicializarLogCajero2();
 
     }
 
@@ -123,16 +134,30 @@ public class PantallaPrincipal extends JFrame implements Observer {
     }
     
     private void inicializarLog(){
-        log = new JTextArea();
+        log = new AreaTexto();
+        banco.addObserver((Observer)log);
         log.setEditable(false);
         barraLog = new JScrollPane(log);
         barraLog.setBounds(160, 80, 430, 150);
         this.add(barraLog);
         
     }
-
-    @Override
-    public void update(Observable o, Object o1) {
-        log.setText(log.getText()+"\n"+(String)o1);
+    private void inicializarLogCajero1(){
+        logCajero1 = new AreaTexto();
+        cajero1.addObserver((Observer)logCajero1);
+        logCajero1.setEditable(false);
+        barraLogCajero1 = new JScrollPane(logCajero1);
+        barraLogCajero1.setBounds(160, 250, 430, 150);
+        this.add(barraLogCajero1);
+        
+    }
+    private void inicializarLogCajero2(){
+        logCajero2 = new AreaTexto();
+        cajero2.addObserver((Observer)logCajero2);
+        logCajero2.setEditable(false);
+        barraLogCajero2 = new JScrollPane(logCajero2);
+        barraLogCajero2.setBounds(160, 420, 430, 150);
+        this.add(barraLogCajero2);
+        
     }
 }

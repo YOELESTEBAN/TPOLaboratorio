@@ -13,11 +13,14 @@ import javax.swing.JTextArea;
  *
  * @author Yoni
  */
-public class AreaTexto extends JTextArea implements Observer{
+public class AreaTexto extends JTextArea implements Observer {
 
+    /* public AreaTexto(){
+     super();
+     }*/
     @Override
     public void update(Observable o, Object o1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.setText(this.getText()+"\n"+(String)o1);
     }
-    
+
 }

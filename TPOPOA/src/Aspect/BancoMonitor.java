@@ -34,7 +34,7 @@ public class BancoMonitor extends Observable implements Runnable {
     }
 
     /*hacer cola estaba sincronizado*/
-    public void hacerCola(HiloCliente c) {
+    public synchronized void hacerCola(HiloCliente c) {
         if (!cola.isEmpty()) {
 
             this.setChanged();
@@ -173,7 +173,7 @@ public class BancoMonitor extends Observable implements Runnable {
         return (c.getCajero().verMovimientos(c.getNumeroCuenta()));
     }
 
-    public synchronized void esperar() {
+    public void esperar() {
         try {
             this.wait();
         } catch (InterruptedException ex) {

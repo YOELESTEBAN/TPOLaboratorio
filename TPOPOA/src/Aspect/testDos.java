@@ -65,7 +65,7 @@ public class testDos {
         cajero1.setBanco(elBanco);
         cajero2.setBanco(elBanco);
         BancoMonitor moni = new BancoMonitor(lisClientes, cajero1, cajero2);
-        PantallaPrincipal pant = new PantallaPrincipal(moni);
+        PantallaPrincipal pant = new PantallaPrincipal(moni,cajero1, cajero2);
         pant.setVisible(true);
         HiloCliente h1n1 = new HiloCliente(a, moni);
         HiloCliente h1n2 = new HiloCliente(b, moni);
