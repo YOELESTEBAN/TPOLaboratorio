@@ -72,8 +72,7 @@ public class testDos {
         HiloCliente h1n3 = new HiloCliente(c, moni);
         HiloCliente h1n4 = new HiloCliente(d, moni);
         HiloCliente h1n5 = new HiloCliente(e, moni);
-        Thread hm = new Thread(moni);
-        hm.start();
+        
         h1n1.start();
         h1n2.start();
         h1n3.start();
@@ -81,7 +80,6 @@ public class testDos {
         h1n5.start();
 
         try {
-            hm.join();
             h1n1.join();
             h1n2.join();
             h1n3.join();

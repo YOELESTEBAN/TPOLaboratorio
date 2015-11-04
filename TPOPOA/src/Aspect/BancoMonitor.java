@@ -18,7 +18,7 @@ import todo.Movimiento;
  *
  * @author Jonathan
  */
-public class BancoMonitor extends Observable implements Runnable {
+public class BancoMonitor extends Observable{
 
     private Cajero cajero1;
     private Cajero cajero2;
@@ -179,11 +179,5 @@ public class BancoMonitor extends Observable implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(BancoMonitor.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void run() {
-        //el monitor solamente lo mantenemos vivo
-        while (true);
     }
 }
